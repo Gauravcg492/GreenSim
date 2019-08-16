@@ -10,11 +10,33 @@ import org.cloudbus.cloudsim.Vm;
  */
 
 public class ExtVm extends Vm{
+	
+	private ExtHost exthost;
 
 	public ExtVm(int id, int userId, double mips, int numberOfPes, int ram, long bw, long size, String vmm,
 			CloudletScheduler cloudletScheduler) {
 		super(id, userId, mips, numberOfPes, ram, bw, size, vmm, cloudletScheduler);
 		// TODO Auto-generated constructor stub
+	}
+	
+	/**
+	 * Sets the host that runs this VM.
+	 * 
+	 * @param host Host running the VM
+	 * @pre host != $null
+	 * @post $none
+	 */
+	public void setHost(ExtHost host) {
+		this.exthost = host;
+	}
+
+	/**
+	 * Gets the host.
+	 * 
+	 * @return the host
+	 */
+	public ExtHost getHost() {
+		return exthost;
 	}
 	
 	/**

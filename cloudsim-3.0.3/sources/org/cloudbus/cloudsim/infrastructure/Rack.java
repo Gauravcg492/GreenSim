@@ -3,9 +3,9 @@ package org.cloudbus.cloudsim.infrastructure;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cloudbus.cloudsim.Host;
+import org.cloudbus.cloudsim.infrastructure.ExtHost;
 import org.cloudbus.cloudsim.core.CloudSim;
-import org.cloudbus.cloudsim.lists.HostList;
+import org.cloudbus.cloudsim.lists.infrastructure.ExtHostList;
 
 @SuppressWarnings("unused")
 
@@ -16,7 +16,7 @@ public class Rack {
 
 	/** The hosts of the rack, that
          * represent the servers.*/
-	private List<? extends Host> hostList;
+	private List<? extends ExtHost> hostList;
 
 	/** Tells whether this zone is working properly or has failed. */
 	//private boolean failed;
@@ -30,7 +30,7 @@ public class Rack {
 	 * @param id the rack id
 	 * @param hostList the rack's Hosts list
 	 */
-	public Rack(int id, List<? extends Host> hostList){
+	public Rack(int id, List<? extends ExtHost> hostList){
 		setId(id);
 		setHostList(hostList);
 		setHost();
@@ -62,7 +62,7 @@ public class Rack {
          * @todo check this warning below
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends Host> List<T> getHostList() {
+	public <T extends ExtHost> List<T> getHostList() {
 		return (List<T>) hostList;
 	}
 
@@ -74,11 +74,11 @@ public class Rack {
 	 * @param <T> the generic type
 	 * @param hostList the new host list
 	 */
-	protected <T extends Host> void setHostList(List<? extends Host> hostList) {
+	protected <T extends ExtHost> void setHostList(List<? extends ExtHost> hostList) {
 		this.hostList = hostList;
 	}
 	public void setHost() {
-		for (Host host : getHostList()) {
+		for (ExtHost host : getHostList()) {
 			host.setRack(this);
 		}
 	}
@@ -109,7 +109,7 @@ public class Rack {
 	 */
 	public int getL_host(int hostId) {
 		if(hostId>0) {
-			return (HostList.getById(getHostList(), hostId-1)).getId();
+			return (ExtHostList.getById(getHostList(), hostId-1)).getId();
 		}
 		else{
 			return -1;
@@ -122,8 +122,8 @@ public class Rack {
 	 * @return the l_host
 	 */
 	public int getR_host(int hostId) {
-		if(hostId<HostList.size(getHostList())-1) {
-			return (HostList.getById(getHostList(), hostId+1)).getId();
+		if(hostId<ExtHostList.size(getHostList())-1) {
+			return (ExtHostList.getById(getHostList(), hostId+1)).getId();
 		}
 		else{
 			return -1;
