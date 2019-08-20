@@ -13,8 +13,55 @@ import org.cloudbus.cloudsim.core.CloudSim;
 import org.cloudbus.cloudsim.core.CloudSimTags;
 import org.cloudbus.cloudsim.core.SimEvent;
 import org.cloudbus.cloudsim.lists.VmList;
+import org.cloudbus.cloudsim.lists.infrastructure.ExtVmList;
 
 public class ExtDatacenterBroker extends DatacenterBroker {
+	
+	
+	protected void processVmCreate(SimEvent ev) {
+		int[] data = (int[]) ev.getData();
+		int datacenterId = data[0];
+		int vmId = data[1];
+		int result = data[2];
+
+		if (result == CloudSimTags.TRUE) {
+			getVmsToDatacentersMap().put(vmId, datacenterId);
+			getVmsCreatedList().add(ExtVmList.getById(getVmList(), vmId));
+			Log.printLine(CloudSim.clock() + ": " + getName() + ": VM #" + vmId
+					+ " has been created in Datacenter #" + datacenterId + ", Host #"
+					+ ExtVmList.getById(getVmsCreatedList(), vmId).getHost().getId());
+		} else {
+			Log.printLine(CloudSim.clock() + ": " + getName() + ": Creation of VM #" + vmId
+					+ " failed in Datacenter #" + datacenterId);
+		}
+
+		incrementVmsAcks();
+
+		// all the requested VMs have been created
+		if (getVmsCreatedList().size() == getVmList().size() - getVmsDestroyed()) {
+			submitCloudlets();
+		} else {
+			// all the acks received, but some VMs were not created
+			if (getVmsRequested() == getVmsAcks()) {
+				// find id of the next datacenter that has not been tried
+				for (int nextDatacenterId : getDatacenterIdsList()) {
+					if (!getDatacenterRequestedIdsList().contains(nextDatacenterId)) {
+						createVmsInDatacenter(nextDatacenterId);
+						return;
+					}
+				}
+
+				// all datacenters already queried
+				if (getVmsCreatedList().size() > 0) { // if some vm were created
+					submitCloudlets();
+				} else { // no vms created. abort
+					Log.printLine(CloudSim.clock() + ": " + getName()
+							+ ": none of the required VMs could be created. Aborting");
+					finishExecution();
+				}
+			}
+		}
+	}
 	
 	/** The list of VM Ids for each Cloudlet*/
 	public List <Integer> cloudlet_vmid = new ArrayList<Integer>();
@@ -69,19 +116,19 @@ public class ExtDatacenterBroker extends DatacenterBroker {
 			
 			for(int i = 0;i < cloudlet_vmid.size();i++) {
 				count_vmid[cloudlet_vmid.get(i)]++;
-				hostid[i] = VmList.getById(getVmsCreatedList(), cloudlet_vmid.get(i)).getHost().getId();
+				hostid[i] = ExtVmList.getById(getVmsCreatedList(), cloudlet_vmid.get(i)).getHost().getId();
 				host_hash_Set.add(hostid[i]);
 				host.add(hostid[i]);
-				rackid[i] = VmList.getById(getVmsCreatedList(), cloudlet_vmid.get(i)).getHost().getRack().getId();
+				rackid[i] = ExtVmList.getById(getVmsCreatedList(), cloudlet_vmid.get(i)).getHost().getRack().getId();
 				rack_hash_Set.add(rackid[i]);
 				rack.add(rackid[i]);
-				aisleid[i] = VmList.getById(getVmsCreatedList(), cloudlet_vmid.get(i)).getHost().getRack().getAisle().getId();
+				aisleid[i] = ExtVmList.getById(getVmsCreatedList(), cloudlet_vmid.get(i)).getHost().getRack().getAisle().getId();
 				aisle_hash_Set.add(aisleid[i]);
 				aisle.add(aisleid[i]);
-				zoneid[i] = VmList.getById(getVmsCreatedList(), cloudlet_vmid.get(i)).getHost().getRack().getAisle().getZone().getId();
+				zoneid[i] = ExtVmList.getById(getVmsCreatedList(), cloudlet_vmid.get(i)).getHost().getRack().getAisle().getZone().getId();
 				zone_hash_Set.add(zoneid[i]);
 				zone.add(zoneid[i]);
-				dcid[i] = VmList.getById(getVmsCreatedList(), cloudlet_vmid.get(i)).getHost().getRack().getAisle().getZone().getDatacenter().getId();
+				dcid[i] = ExtVmList.getById(getVmsCreatedList(), cloudlet_vmid.get(i)).getHost().getRack().getAisle().getZone().getDatacenter().getId();
 				dc_hash_Set.add(dcid[i]);
 				dc.add(dcid[i]);
 			}

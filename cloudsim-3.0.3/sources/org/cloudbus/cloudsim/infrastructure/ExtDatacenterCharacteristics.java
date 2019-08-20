@@ -20,7 +20,7 @@ public class ExtDatacenterCharacteristics extends DatacenterCharacteristics {
 			double costPerMem,
 			double costPerStorage,
 			double costPerBw) {
-		super(architecture, os, vmm, null, timeZone,
+		super(architecture, os, vmm, new ArrayList<Host>(), timeZone,
 				costPerSec, costPerMem, costPerStorage, costPerBw);
 		// TODO Auto-generated constructor stub
 		setZoneList(zoneList);
