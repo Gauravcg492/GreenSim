@@ -7,7 +7,6 @@ import org.cloudbus.cloudsim.Storage;
 import org.cloudbus.cloudsim.VmAllocationPolicy;
 
 public class ExtDatacenter extends Datacenter {
-	private ExtDatacenterCharacteristics characteristics;
 
 	public ExtDatacenter(String name,
 			ExtDatacenterCharacteristics characteristics,
@@ -15,18 +14,20 @@ public class ExtDatacenter extends Datacenter {
 			List<Storage> storageList,
 			double schedulingInterval) throws Exception {
 		super(name, characteristics, vmAllocationPolicy, storageList, schedulingInterval);
-		// TODO Auto-generated constructor stub
+		setCharacteristics(characteristics);
+		
 		for(Zone zone : getCharacteristics().getZoneList()) {
 			zone.setDatacenter(this);
 		}
 	}
 
-	public ExtDatacenterCharacteristics getCharacteristics() {
-		return characteristics;
-	}
-
-	public void setCharacteristics(ExtDatacenterCharacteristics characteristics) {
-		this.characteristics = characteristics;
+	/**
+	 * Gets the characteristics.
+	 * 
+	 * @return the characteristics
+	 */
+	protected ExtDatacenterCharacteristics getCharacteristics() {
+		return (ExtDatacenterCharacteristics) super.getCharacteristics();
 	}
 
 }
