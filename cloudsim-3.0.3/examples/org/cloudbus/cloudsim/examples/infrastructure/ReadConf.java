@@ -108,7 +108,7 @@ public class ReadConf {
 	 * @return
 	 */
 	
-	public int getZonecount(){
+	public int getZoneCount(){
 		return nzone;
 	}
 	
