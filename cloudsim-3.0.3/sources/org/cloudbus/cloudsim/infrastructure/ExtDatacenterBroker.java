@@ -68,7 +68,6 @@ public class ExtDatacenterBroker extends DatacenterBroker {
 
 	public ExtDatacenterBroker(String name) throws Exception {
 		super(name);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**

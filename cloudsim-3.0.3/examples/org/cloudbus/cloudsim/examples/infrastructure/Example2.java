@@ -25,6 +25,7 @@ import org.cloudbus.cloudsim.UtilizationModelFull;
 import org.cloudbus.cloudsim.core.CloudSim;
 import org.cloudbus.cloudsim.infrastructure.ExtVm;
 import org.cloudbus.cloudsim.lists.VmList;
+import org.cloudbus.cloudsim.lists.infrastructure.ExtVmList;
 
 /**
  * A simple example showing how to create
@@ -121,12 +122,6 @@ public class Example2 {
 
 	            	// Final step: Print results when simulation is over
 	            	List<Cloudlet> newList = broker.getCloudletReceivedList();
-	            	List<Cloudlet> cloudletlist = broker.getCloudletList();
-	            	for (Cloudlet cloudlet : cloudletlist) {
-	            		int cloudlet_vmid = cloudlet.getVmId();
-	            		Log.printLine(cloudlet_vmid);
-	            		Log.printLine("imple"+VmList.getById(broker.getVmsCreatedList(), cloudlet_vmid).getHost().getId());
-	            	}
 
 	            	CloudSim.stopSimulation();
 
@@ -162,7 +157,7 @@ public class Example2 {
 	        int size = list.size();
 	        Cloudlet cloudlet;
 
-	        String indent = "    ";
+	        String indent = "     ";
 	        Log.printLine();
 	        Log.printLine("========== OUTPUT ==========");
 	        Log.printLine("Cloudlet ID" + indent + "STATUS" + indent +
@@ -177,7 +172,7 @@ public class Example2 {
 	                Log.print("SUCCESS");
 
 	            	Log.printLine( indent + indent + cloudlet.getResourceId() + indent + indent + indent + cloudlet.getVmId() +
-	                     indent + indent + dft.format(cloudlet.getActualCPUTime()) + indent + indent + dft.format(cloudlet.getExecStartTime())+
+	                      indent + indent + dft.format(cloudlet.getActualCPUTime()) + indent + indent + dft.format(cloudlet.getExecStartTime())+
                              indent + indent + dft.format(cloudlet.getFinishTime()));
 	            }
 	        }
