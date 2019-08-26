@@ -25,21 +25,27 @@ public class CreateInfrastructure {
 	
 	private List<HostCharacteristics> types;
 	
-	public ExtDatacenter createInfrastructure(String str)
+	public ExtDatacenter createInfrastructure(List<String> str)
 	{
 		//Reader read = new Reader(str);	
-		MainReadConf read = new MainReadConf(str);
+		ReadConf read = new ReadConf(str.get(0));
 		List<ExtDatacenter> dcList = new ArrayList<ExtDatacenter>();
 		
-		int hostid = 0;
-		int rackid = 0;
-		int aisleid = 0;
-		int zoneid = 0;
+		int datacenterCount = read.getDatacenterCount();
 		
-		types = read.getTypeList();
-		
-		for(int i=0; i<read.getDatacenterCount(); i++)
+		for(int i=0; i<datacenterCount; i++)
 		{
+			if(i != 0) {
+				read = new ReadConf(str.get(i));
+			}
+			
+			int hostid = 0;
+			int rackid = 0;
+			int aisleid = 0;
+			int zoneid = 0;
+			
+			types = read.getTypeList();
+			
 			List<Zone> zoneList = new ArrayList<Zone>();
 			List<List<Aisle>> aisle2D = new ArrayList<List<Aisle>>();
 			int nz = zoneid;

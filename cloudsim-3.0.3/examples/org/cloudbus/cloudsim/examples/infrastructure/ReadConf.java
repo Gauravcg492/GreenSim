@@ -1,5 +1,6 @@
 package org.cloudbus.cloudsim.examples.infrastructure;
 
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,6 +13,9 @@ import org.cloudbus.cloudsim.examples.infrastructure.HostCharacteristics;
 public class ReadConf {
 	
 	// The required variables	
+	
+	private static int ndatacenter;
+	
 	private int nzone;
 	
 	private List<Integer> aisleList;
@@ -51,7 +55,8 @@ public class ReadConf {
 	 */
 	
 	public void Initialise() {
-
+		
+		ndatacenter = Integer.valueOf(prop.getProperty("NO_OF_DATACENTERS"));
 		nzone = Integer.valueOf(prop.getProperty("NO_OF_ZONES"));
 		aisleList = getList(prop.getProperty("NO_OF_AISLES"));
 		rackList = getList(prop.getProperty("NO_OF_RACKS"));
@@ -101,6 +106,15 @@ public class ReadConf {
 		}
 		
 		return list;
+	}
+	
+	/**
+	 * function to return the number of datacenters given in conf file
+	 * @return
+	 */
+	
+	public int getDatacenterCount() {
+		return ndatacenter;
 	}
 	
 	/**

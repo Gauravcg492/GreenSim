@@ -24,8 +24,6 @@ import org.cloudbus.cloudsim.UtilizationModel;
 import org.cloudbus.cloudsim.UtilizationModelFull;
 import org.cloudbus.cloudsim.core.CloudSim;
 import org.cloudbus.cloudsim.infrastructure.ExtVm;
-import org.cloudbus.cloudsim.lists.VmList;
-import org.cloudbus.cloudsim.lists.infrastructure.ExtVmList;
 
 /**
  * A simple example showing how to create
@@ -65,9 +63,11 @@ public class Example2 {
 	            	//Datacenters are the resource providers in CloudSim. We need at list one of them to run a CloudSim simulation
 	            	//@SuppressWarnings("unused")
 					//Conf_reader r0 = new Conf_reader();
+	            	List<String> file = new ArrayList<String>();
+	            	file.add("C:\\Users\\user\\Desktop\\Work\\Greensim.conf");
 	            	CreateInfrastructure r0 = new CreateInfrastructure();
 					//Datacenter dc = r0.createInfrastructure("/home/ubuntu/Documents/GreenSim/CloudSim_Granularity/modules/cloudsim-examples/src/main/java/org/cloudbus/cloudsim/examples/GreenSim.conf");
-					Datacenter dc = r0.createInfrastructure("C:\\Users\\user\\Desktop\\Work\\GreenSim\\cloudsim-3.0.3\\examples\\org\\cloudbus\\cloudsim\\examples\\infrastructure\\Greensim.conf");
+					Datacenter dc = r0.createInfrastructure(file);
 
 	            	//Third step: Create Broker
 	            	DatacenterBroker broker = createBroker();
