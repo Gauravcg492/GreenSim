@@ -33,7 +33,7 @@ import org.cloudbus.cloudsim.infrastructure.ExtVm;
  * The cloudlets will take the same time to
  * complete the execution.
  */
-public class Example2 {
+public class Example3 {
 
 	/** The cloudlet list. */
 	private static List<Cloudlet> cloudletList;
@@ -45,7 +45,7 @@ public class Example2 {
 	 * Creates main() to run this example
 	 */
 	@SuppressWarnings("unused")
-	public static void main(String[] args) {
+	public void start(List<String> confList, String workload) {
 
 		Log.printLine("Starting CloudSimExample2...");
 
@@ -63,12 +63,10 @@ public class Example2 {
 	            	//Datacenters are the resource providers in CloudSim. We need at list one of them to run a CloudSim simulation
 	            	//@SuppressWarnings("unused")
 					//Conf_reader r0 = new Conf_reader();
-	            	List<String> file = new ArrayList<String>();
-	            	file.add("/home/ubuntu/Downloads/MyDownloads/trial/GreenSim.conf");
-	            	file.add("/home/ubuntu/Downloads/MyDownloads/trial/GreenSim1.conf");
+	            	
 	            	CreateInfrastructure r0 = new CreateInfrastructure();
 					//Datacenter dc = r0.createInfrastructure("/home/ubuntu/Documents/GreenSim/CloudSim_Granularity/modules/cloudsim-examples/src/main/java/org/cloudbus/cloudsim/examples/GreenSim.conf");
-					Datacenter dc = r0.createInfrastructure(file);
+					Datacenter dc = r0.createInfrastructure(confList);
 
 	            	//Third step: Create Broker
 	            	DatacenterBroker broker = createBroker();
@@ -180,3 +178,4 @@ public class Example2 {
 
 	    }
 }
+

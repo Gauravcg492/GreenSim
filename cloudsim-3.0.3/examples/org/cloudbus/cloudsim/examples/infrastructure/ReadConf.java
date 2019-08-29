@@ -55,8 +55,12 @@ public class ReadConf {
 	 */
 	
 	public void Initialise() {
-		
-		ndatacenter = Integer.valueOf(prop.getProperty("NO_OF_DATACENTERS"));
+		try {
+			ndatacenter = Integer.valueOf(prop.getProperty("NO_OF_DATACENTERS"));
+		}
+		catch(Exception e) {
+			
+		}
 		nzone = Integer.valueOf(prop.getProperty("NO_OF_ZONES"));
 		aisleList = getList(prop.getProperty("NO_OF_AISLES"));
 		rackList = getList(prop.getProperty("NO_OF_RACKS"));
