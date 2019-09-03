@@ -26,13 +26,34 @@ public class ExtDatacenterBroker extends DatacenterBroker {
 
 		if (result == CloudSimTags.TRUE) {
 			getVmsToDatacentersMap().put(vmId, datacenterId);
-			getVmsCreatedList().add(ExtVmList.getById(getVmList(), vmId));
-			Log.printLine(CloudSim.clock() + ": " + getName() + ": VM #" + vmId
-					+ " has been created in Datacenter #" + datacenterId + ", Host #"
-					+ ExtVmList.getById(getVmsCreatedList(), vmId).getHost().getId());
+			getVmsCreatedList().add(VmList.getById(getVmList(), vmId));
+//			List<Host> hostList = VmList.getById(getVmsCreatedList(), vmId).getHost().getRack().getHostList();
+//			if(VmList.getById(getVmsCreatedList(), vmId).getHost().getId() > 0) {
+//				List<Host> l_hostList = VmList.getById(getVmsCreatedList(), vmId).getHost().getRack().getHostList();
+//			}
+//			String a = VmList.getById(getVmsCreatedList(), vmId).getHost().getRack().getAisle().getZone().getAddress();
+//			Log.printLine(a);
+//			String b = VmList.getById(getVmsCreatedList(), vmId).getHost().getRack().getAisle().getAddress();
+//			Log.printLine(b);
+//			String c = VmList.getById(getVmsCreatedList(), vmId).getHost().getRack().getAddress();
+//			Log.printLine(c);
+			String d = ExtVmList.getById(getVmsCreatedList(), vmId).getHost().getAddress();
+			Log.printLine(d);
+//			String e = VmList.getById(getVmsCreatedList(), vmId).getAddress();
+//			Log.printLine(e);
+			Log.printLine("Inside ext" +CloudSim.clock()+ ": "+ getName()+ ": VM #"+ vmId+
+					" has been created in Datacenter #"+ datacenterId+ 
+					", Zone #"+ ExtVmList.getById(getVmsCreatedList(), vmId).getHost().getRack().getAisle().getZone().getId()+
+					", Aisle #"+ ExtVmList.getById(getVmsCreatedList(), vmId).getHost().getRack().getAisle().getId()+
+					", Rack #"+ ExtVmList.getById(getVmsCreatedList(), vmId).getHost().getRack().getId()+
+					" Host #"+ 	ExtVmList.getById(getVmsCreatedList(), vmId).getHost().getId()+
+					" Host Characteristics #"+ 	ExtVmList.getById(getVmsCreatedList(), vmId).getHost().getCharacteristics()
+//					" L Host # "+ (VmList.getById(getVmsCreatedList(), vmId).getHost().getRack()).getL_host(VmList.getById(getVmsCreatedList(), vmId).getHost().getId()+ hostlist)+
+//					" R Host # "+ (VmList.getById(getVmsCreatedList(), vmId).getHost().getRack()).getR_host(VmList.getById(getVmsCreatedList(), vmId).getHost().getId()+ hostlist)
+					);
 		} else {
-			Log.printLine(CloudSim.clock() + ": " + getName() + ": Creation of VM #" + vmId
-					+ " failed in Datacenter #" + datacenterId);
+			Log.printLine(CloudSim.clock() + ": "+ getName() + ": Creation of VM #" + vmId + 
+					" failed in Datacenter #" + datacenterId);
 		}
 
 		incrementVmsAcks();
@@ -80,14 +101,13 @@ public class ExtDatacenterBroker extends DatacenterBroker {
 	protected void processCloudletReturn(SimEvent ev) {
 		Cloudlet cloudlet = (Cloudlet) ev.getData();
 		getCloudletReceivedList().add(cloudlet);
-		Log.printLine(CloudSim.clock() + ": " + getName() + ": Cloudlet " + cloudlet.getCloudletId()
-				+ " received");
+		Log.printLine(CloudSim.clock()+ ": "+ getName()+ ": Cloudlet "+ cloudlet.getCloudletId()+
+				" received");
 		
 		cloudlet_vmid.add(cloudlet.getVmId());
 		
 		cloudletsSubmitted--;
 		if (getCloudletList().size() == 0 && cloudletsSubmitted == 0) { // all cloudlets executed
-			
 //			Log.printLine(getVmsCreatedList().size());
 //			Log.printLine(cloudlet_vmid);
 			
@@ -143,11 +163,17 @@ public class ExtDatacenterBroker extends DatacenterBroker {
 //			Log.printLine("The array Datacenter is: "+ dc);
 //			Log.printLine("The set Datacenter hashset is: " + dc_hash_Set);
 			
-			int count_hostid[] = new int[host_hash_Set.size()];
-			int count_rackid[] = new int[rack_hash_Set.size()];
-			int count_aisleid[] = new int[aisle_hash_Set.size()];
-			int count_zoneid[] = new int[zone_hash_Set.size()];
+			//int count_hostid[] = new int[host_hash_Set.size()];
+			//int count_rackid[] = new int[rack_hash_Set.size()];
+//			int count_aisleid[] = new int[aisle_hash_Set.size()];
+//			int count_zoneid[] = new int[zone_hash_Set.size()];
+			int count_hostid[] = new int[max(hostid)+1];
+			int count_rackid[] = new int[max(rackid)+1];
+			int count_aisleid[] = new int[max(aisleid)+1];
+			int count_zoneid[] = new int[max(zoneid)+1];
 			int count_dcid[] = new int[dc_hash_Set.size()];
+			
+			//int count_dcid[] = new int[max(dcid)+1];
 			
 			for (int i = 0; i < count_vmid.length; i++) {
 				Log.printLine("Vm "+ i + " has " + count_vmid[i]+ " cloudlets");
@@ -164,6 +190,7 @@ public class ExtDatacenterBroker extends DatacenterBroker {
 			for (int i = 0; i<rackid.length; i++) {
 				count_rackid[rackid[i]]++;
 			}
+			
 			
 			for(int i= 0;i<count_rackid.length;i++) {
 				Log.printLine("Rack "+ i + " has " + count_rackid[i]+ " cloudlets");
@@ -193,8 +220,8 @@ public class ExtDatacenterBroker extends DatacenterBroker {
 				int j = i + 2;
 				Log.printLine("Datacenter "+ j + " has " + count_dcid[i]+ " cloudlets");
 			}
-			
-			Log.printLine(CloudSim.clock() + ": " + getName() + ": All Cloudlets executed. Finishing...");
+						
+			Log.printLine(CloudSim.clock()+ ": "+ getName()+ ": All Cloudlets executed. Finishing...");
 			clearDatacenters();
 			finishExecution();
 		} else { // some cloudlets haven't finished yet
@@ -207,6 +234,26 @@ public class ExtDatacenterBroker extends DatacenterBroker {
 
 		}
 	}
+	
+	/**
+	 * Computes the max of the elements in an array
+	 * @param a
+	 * @return
+	 */
+	
+	private int max(int[] a) {
+		// TODO Auto-generated method stub
+		int max = a[0];
+		for(int i = 1;i<a.length; i++)
+		{
+			if(a[i]>max)
+			{
+				max = a[i];
+			}
+		}
+		return max;
+	}
+
 	
 	/**
 	 * Submit cloudlets to the created VMs.

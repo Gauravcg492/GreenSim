@@ -18,11 +18,11 @@ import java.util.List;
 import org.cloudbus.cloudsim.Cloudlet;
 import org.cloudbus.cloudsim.CloudletSchedulerTimeShared;
 import org.cloudbus.cloudsim.Datacenter;
-import org.cloudbus.cloudsim.DatacenterBroker;
 import org.cloudbus.cloudsim.Log;
 import org.cloudbus.cloudsim.UtilizationModel;
 import org.cloudbus.cloudsim.UtilizationModelFull;
 import org.cloudbus.cloudsim.core.CloudSim;
+import org.cloudbus.cloudsim.infrastructure.ExtDatacenterBroker;
 import org.cloudbus.cloudsim.infrastructure.ExtVm;
 
 /**
@@ -71,7 +71,7 @@ public class Example2 {
 					Datacenter dc = r0.createInfrastructure(file);
 
 	            	//Third step: Create Broker
-	            	DatacenterBroker broker = createBroker();
+	            	ExtDatacenterBroker broker = createBroker();
 	            	int brokerId = broker.getId();
 
 	            	//Fourth step: Create one virtual machine
@@ -138,11 +138,11 @@ public class Example2 {
 
 	    //We strongly encourage users to develop their own broker policies, to submit vms and cloudlets according
 	    //to the specific rules of the simulated scenario
-	    private static DatacenterBroker createBroker(){
+	    private static ExtDatacenterBroker createBroker(){
 
-	    	DatacenterBroker broker = null;
+	    	ExtDatacenterBroker broker = null;
 	        try {
-			broker = new DatacenterBroker("Broker");
+			broker = new ExtDatacenterBroker("Broker");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
