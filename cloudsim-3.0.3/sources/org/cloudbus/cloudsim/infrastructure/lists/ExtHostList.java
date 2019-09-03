@@ -1,4 +1,4 @@
-package org.cloudbus.cloudsim.lists.infrastructure;
+package org.cloudbus.cloudsim.infrastructure.lists;
 
 import java.util.List;
 

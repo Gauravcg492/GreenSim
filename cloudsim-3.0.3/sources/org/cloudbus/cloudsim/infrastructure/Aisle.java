@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cloudbus.cloudsim.core.CloudSim;
-import org.cloudbus.cloudsim.lists.infrastructure.RackList;
+import org.cloudbus.cloudsim.infrastructure.lists.RackList;
 
 @SuppressWarnings("unused")
 

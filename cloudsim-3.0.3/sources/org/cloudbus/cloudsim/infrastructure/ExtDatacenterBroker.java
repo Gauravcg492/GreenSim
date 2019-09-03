@@ -13,7 +13,7 @@ import org.cloudbus.cloudsim.core.CloudSim;
 import org.cloudbus.cloudsim.core.CloudSimTags;
 import org.cloudbus.cloudsim.core.SimEvent;
 import org.cloudbus.cloudsim.lists.VmList;
-import org.cloudbus.cloudsim.lists.infrastructure.ExtVmList;
+import org.cloudbus.cloudsim.infrastructure.lists.ExtVmList;
 
 public class ExtDatacenterBroker extends DatacenterBroker {
 	

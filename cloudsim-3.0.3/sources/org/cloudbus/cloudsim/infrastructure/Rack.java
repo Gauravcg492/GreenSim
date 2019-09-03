@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.cloudbus.cloudsim.infrastructure.ExtHost;
 import org.cloudbus.cloudsim.core.CloudSim;
-import org.cloudbus.cloudsim.lists.infrastructure.ExtHostList;
+import org.cloudbus.cloudsim.infrastructure.lists.ExtHostList;
 
 @SuppressWarnings("unused")
 
